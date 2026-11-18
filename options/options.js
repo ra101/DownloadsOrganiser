@@ -78,6 +78,11 @@ document.addEventListener('DOMContentLoaded', function() {
             input.value = oldName;
             return;
         }
+        if (!isValidFolderName(newName)) {
+            showError('Category names may only use letters, numbers, spaces, dots, dashes and underscores.');
+            input.value = oldName;
+            return;
+        }
         if (categoryMap[newName]) {
             showError('A category with that name already exists.');
             input.value = oldName;
@@ -97,6 +102,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const name = newCategoryInput.value.trim();
         if (!name) {
             showError('Enter a category name.');
+            return;
+        }
+        if (!isValidFolderName(name)) {
+            showError('Category names may only use letters, numbers, spaces, dots, dashes and underscores.');
             return;
         }
         if (categoryMap[name]) {

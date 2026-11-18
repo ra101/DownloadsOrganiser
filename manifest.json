@@ -19,8 +19,5 @@
     "default_icon": "img/icon48.png",
     "default_popup": "popup/popup.html"
   },
-  "options_page": "options/options.html",
-  "host_permissions": [
-    "<all_urls>"
-  ]
+  "options_page": "options/options.html"
 }

@@ -66,14 +66,6 @@ chrome.downloads.onChanged.addListener((downloadDelta) => {
     }
 });
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.command === 'updateFolderMap' && request.newFolderMap) {
-        // Update the folderMap with the new mappings provided in the request
-        folderMap = request.newFolderMap;
-        sendResponse({status: 'Folder map updated successfully'});
-    }
-    
-});
 
 
 

@@ -51,6 +51,13 @@ function categoryMapToExtensionMap(categoryMap) {
     );
 }
 
+function isValidFolderName(name) {
+    return /^[\w .-]+$/.test(name)
+        && !/^\.+$/.test(name)
+        && !/[. ]$/.test(name)
+        && !/^(con|prn|aux|nul|com\d|lpt\d)(\..*)?$/i.test(name);
+}
+
 function parseExtensions(input) {
     const extensions = String(input)
         .split(/[\s,;]+/)

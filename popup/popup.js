@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     addMappingForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const extensions = parseExtensions(document.getElementById('newExtension').value);
-        const newFolder = document.getElementById('newFolder').value.trim();
+        const newFolder = document.getElementById('newFolder').value.trim().replace(/\/+$/, '');
 
         // Reset the error message
         errorMessage.textContent = '';
@@ -14,6 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Validate the input
         if (!extensions.length || !newFolder) {
             errorMessage.textContent = 'Please enter valid extensions and a folder.';
+            return;
+        }
+        if (!isValidFolderName(newFolder)) {
+            errorMessage.textContent = 'Folder names may only use letters, numbers, spaces, dots, dashes and underscores.';
             return;
         }
 
@@ -27,9 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     const previousCategory = previousFolder.replace(/\/$/, '') || 'General';
                     moves.push(`.${extension} moved from ${previousCategory} to ${newFolder.replace(/\/$/, '') || 'General'}`);
                 }
-                data.folderMap[extension] = newFolder;
+                data.folderMap[extension] = `${newFolder}/`;
             });
-            const categoryMap = {};
+            let categoryMap = {};
             Object.entries(data.folderMap).forEach(([extension, folder]) => {
                 const category = folder ? folder.replace(/\/$/, '') : 'General';
                 if (!categoryMap[category]) categoryMap[category] = [];
