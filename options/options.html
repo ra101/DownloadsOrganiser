@@ -13,33 +13,21 @@
         <div class="content"  id="howToContent">
             <p>Follow these steps to customize your download organization:</p>
             <ol>
-                <li><strong>Add a Folder:</strong> Click 'Add New Folder' and enter the file extension (e.g., 'pdf') and the desired folder name (e.g., 'PDFs/').</li>
-                <li><strong>Remove a Folder:</strong> Click 'Remove' next to the Folder you wish to delete.</li>
-                <li><strong>Save Your Settings:</strong> Click 'Save Changes' to apply your settings.</li>
+                <li><strong>Edit a category:</strong> Change the category name or add/remove file extensions in its card.</li>
+                <li><strong>Add a category:</strong> Enter a name and use the Add Category button.</li>
+                <li><strong>Apply changes:</strong> Extensions are saved automatically as you edit them.</li>
             </ol>
-            <p>Your settings will automatically organize downloaded files into the specified folders.</p>
         </div>
-        <table id="mappingsTable">
-            <thead>
-                <tr>
-                    <th>File Extension</th>
-                    <th>Folder Name</th>
-                    <th>Action</th> 
-                </tr>
-            </thead>
-            <tbody id="mappingsContainer">
-              
-            </tbody>
-        </table>
-        <form id="addMappingForm">
-            <label for="newExtension">File Extension (e.g., pdf):</label>
-            <input type="text" id="newExtension" placeholder="File extension (e.g., pdf)">
-            <label for="newFolder">Folder Name (e.g., PDFs/):</label>
-            <input type="text" id="newFolder" placeholder="Folder (e.g., PDFs/)">
-            <button type="submit">Add Folder</button>
-        </form>
+
+        <div class="category-toolbar">
+            <input type="text" id="newCategory" placeholder="New category name">
+            <button type="button" id="addCategoryButton">Add Category</button>
+            <button type="button" id="resetDefaultsButton" class="reset-button">Reset to Defaults</button>
+        </div>
+        <div id="mappingsContainer" class="category-grid"></div>
         <div id="errorMessage"></div>
     </div>
+    <script src="../defaults.js"></script>
     <script src="options.js"></script>
 </body>
 </html>

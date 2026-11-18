@@ -1,6 +1,6 @@
 # DownloadsOrganiser
 
-Automatically organizes downloaded files into designated folders based on file type.
+Automatically organizes downloaded files into category folders based on file type.
 
 ## Table of Contents
 
@@ -14,14 +14,18 @@ Automatically organizes downloaded files into designated folders based on file t
 
 ## Description
 
-DownloadsOrganiser is a browser extension that simplifies the process of organizing downloaded files on your computer. It automatically categorizes downloaded files into specific folders based on their file extensions. Say goodbye to cluttered download folders!
+DownloadsOrganiser is a Chrome extension that routes downloads into category subfolders based on their file extensions. Paths are resolved relative to the browser's Downloads folder, so no Windows username or absolute path is required.
 
 ## Features
 
-- Automatically organizes downloaded files into designated folders.
-- User-friendly interface for adding, removing, and managing folder mappings.
-- Customizable folder mappings for different file types.
-- How-to guide included to help you get started.
+- Automatically organizes downloads into category subfolders.
+- Category-based options UI with one editable card per category.
+- Multiple extensions per category.
+- Add extensions using spaces or commas, with or without dots, such as `zip rar`, `zap, rar`, or `.tar.gz .tar`.
+- An extension belongs to only one category; moving it shows where it was removed from.
+- Multi-dot extensions such as `tar.gz` are supported.
+- Reset all categories and extensions to the built-in defaults.
+- Built-in categories include Compressed, Documents, Music, Programs, Video, Torrents, 3D Objects, and General.
 
 ## Installation
 
@@ -33,15 +37,22 @@ DownloadsOrganiser is a browser extension that simplifies the process of organiz
 ## Usage
 
 1. Click on the DownloadsOrganiser icon in your browser's toolbar.
-2. Add new folder mappings by specifying the file extension and the desired folder name.
-3. Your downloaded files will now be automatically organized into the specified folders.
+2. Open **Go to Settings Page** to manage categories.
+3. Downloads are now organized beneath the browser's Downloads folder, for example `Downloads/Documents/` or `Downloads/Compressed/`.
 
 ## Configuration
 
-You can REMOVE or ADD folder mappings by following these steps:
+Manage categories and extensions from the extension's Options page:
 
-1. Right Click on the DownloadsOrganiser icon and choose "Options" OR click on "Go To Settings" link found in the popup.
-2. Add or remove folder mappings as needed.
+1. Right-click the DownloadsOrganiser icon and choose **Options**, or open it from the popup.
+2. Edit a category name or use its **Add** field to add one or more extensions.
+3. Remove individual extensions with the `x` control on an extension chip.
+4. Add a category using the category name field and **Add Category** button.
+5. Remove a category to move its extensions to General.
+6. Use **Reset to Defaults** to restore the built-in category configuration.
+
+Examples of valid extension input:
+- `.tar.gz, .tar .gz 7z`
 
 ## Contributing
 

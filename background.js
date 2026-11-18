@@ -1,25 +1,62 @@
-let folderMap = {
-    'pdf': 'PDFs/',
-    'exe': 'Installers/',
-    'jpg': 'Images/',
-    'png': 'Images/',
-    'docx': 'Documents/',
-    'xlsx': 'Documents/',
-    'zip': 'ZIP/',
-    // Initial default mappings; these can be updated dynamically
-};
+importScripts('defaults.js');
+
+let folderMap = defaultExtensionMap;
+let categoryMap = cloneCategoryMap(defaultFolderMap);
+
+function loadFolderMap() {
+    chrome.storage.sync.get(['categoryMap', 'folderMap'], (data) => {
+        if (data.categoryMap) {
+            categoryMap = normalizeCategoryMap(data.categoryMap);
+            folderMap = categoryMapToExtensionMap(categoryMap);
+        } else if (data.folderMap) {
+            folderMap = data.folderMap;
+            categoryMap = cloneCategoryMap(defaultFolderMap);
+            for (const category of Object.keys(categoryMap)) {
+                categoryMap[category] = [];
+            }
+            Object.entries(folderMap).forEach(([extension, folder]) => {
+                const category = folder ? folder.replace(/\/$/, '') : 'General';
+                if (!categoryMap[category]) categoryMap[category] = [];
+                categoryMap[category].push(extension);
+            });
+            chrome.storage.sync.set({ categoryMap, folderMap });
+        } else {
+            folderMap = defaultExtensionMap;
+            categoryMap = cloneCategoryMap(defaultFolderMap);
+            chrome.storage.sync.set({ categoryMap, folderMap: defaultExtensionMap });
+        }
+    });
+}
+
+chrome.runtime.onInstalled.addListener(loadFolderMap);
+chrome.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName === 'sync') {
+        if (changes.categoryMap) {
+            categoryMap = normalizeCategoryMap(changes.categoryMap.newValue || cloneCategoryMap(defaultFolderMap));
+            folderMap = categoryMapToExtensionMap(categoryMap);
+        } else if (changes.folderMap) {
+            folderMap = changes.folderMap.newValue || defaultExtensionMap;
+        }
+    }
+});
+loadFolderMap();
 
 chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
     try {
-        const fileExtension = downloadItem.filename.split('.').pop().toLowerCase();
-        
-        if (folderMap[fileExtension]) {
-            const newFilename = folderMap[fileExtension] + downloadItem.filename;
+        const filename = downloadItem.filename.toLowerCase();
+        const matchingExtension = Object.keys(folderMap)
+            .sort((a, b) => b.length - a.length)
+            .find(extension => filename.endsWith(`.${extension}`));
+
+        if (matchingExtension) {
+            const newFilename = folderMap[matchingExtension] + downloadItem.filename;
             suggest({filename: newFilename});
+        } else {
+            suggest();
         }
     } catch (error) {
         console.error('Error in redirecting download:', error);
-        suggest({filename: 'Other/' + item.filename});
+        suggest();
     }
 });
 
